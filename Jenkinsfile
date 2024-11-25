@@ -43,7 +43,7 @@ pipeline {
                 script {
                     if (params.CREATE_RESOURCES) {
                         echo 'Planning resource creation...'
-                        withAWS(credentials: 'aws') {
+                        withAWS(credentials: 'auto_scaling') {
                             bat 'terraform plan -var-file=terraform.tfvars'
                         }
                     } else if (params.DESTROY_RESOURCES == 'yes') {
