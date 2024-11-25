@@ -32,7 +32,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                withAWS(credentials: 'aws') {
+                withAWS(credentials: 'auto_scaling') {
                     bat 'terraform init'
                 }
             }
@@ -48,7 +48,7 @@ pipeline {
                         }
                     } else if (params.DESTROY_RESOURCES == 'yes') {
                         echo 'Planning resource destruction...'
-                        withAWS(credentials: 'aws') {
+                        withAWS(credentials: 'auto_scaling') {
                             bat 'terraform plan -destroy -var-file=terraform.tfvars'
                         }
                     } else {
@@ -63,12 +63,12 @@ pipeline {
                 script {
                     if (params.CREATE_RESOURCES) {
                         echo 'Applying changes to create resources...'
-                        withAWS(credentials: 'aws') {
+                        withAWS(credentials: 'auto_scaling') {
                             bat 'terraform apply -auto-approve -var-file=terraform.tfvars'
                         }
                     } else if (params.DESTROY_RESOURCES == 'yes') {
                         echo 'Applying changes to destroy resources...'
-                        withAWS(credentials: 'aws') {
+                        withAWS(credentials: 'auto_scaling') {
                             bat 'terraform destroy -auto-approve -var-file=terraform.tfvars'
                         }
                     } else {
